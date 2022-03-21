@@ -1,0 +1,3 @@
+# Ignore dia extra files
+*.dia.autosave
+*.dia[\~]
