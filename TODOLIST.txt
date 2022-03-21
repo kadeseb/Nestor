@@ -1,0 +1,8 @@
+ok Contrôler le bug d'écoute bloquant
+ok Identifier le bug de démarrage décalé de la reconnaissance vocale
+    -> Viens du temps de calibration du bruit ambiant
+ok Modifier le système de calibration du bruit ambiant
+ok Modifier la détection de sifflement avec un temps minimal de sifflement avant de déclencher
+ok Contrôler les faux-positif dans la détection des sifflements
+    -> /!\ Délais 250ms semble suffisant!
+   Ajouter la commande pour le réglage de la luminosité du bandeau LED
