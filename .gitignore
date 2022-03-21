@@ -1,3 +1,6 @@
 # Ignore dia extra files
 *.dia.autosave
 *.dia[\~]
+
+# Ignore Python cache
+__pycache__
