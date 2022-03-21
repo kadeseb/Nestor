@@ -12,15 +12,18 @@ class Command:
     KEYWORDS_WRITE_MODE = ["modifie"]
     REMOVE_WORDS_LIST = ['le', 'la', 'de', 'du', 'à', 'pour', 'en']
 
-    def __init__(self, text):
+    def __init__(self):
         self.mode = None
         self.argument = None
         self.targetDevice = None
         self.badCmd = True
 
     def parse(self, text):
+        self.__init__()
         words = self._cleanText(text).split(" ")
         wordsSz = len(words)
+
+        print(words)
 
         if ((wordsSz != 3) and (wordsSz != 4)):
             return False

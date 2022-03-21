@@ -14,7 +14,7 @@ COMMANDS = [
 
 for command in COMMANDS:
     print("Texte:", command)
-    cmd = CMD.Command(command)
+    cmd = CMD.Command()
     cmd.parse(command)
     cmd.show()
     print("")

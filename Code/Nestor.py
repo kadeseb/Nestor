@@ -7,7 +7,8 @@ import pyttsx3
 import time
 # -------
 from SpeechToText import *
-from CommandAnalyzer2 import *
+#from CommandAnalyzer2 import *
+import CMD
 from WhistleDetector import *
 
 
@@ -15,7 +16,7 @@ from WhistleDetector import *
 VOICE_RATE = 270
 VOICE_RATE = 200
 '''
-VOICE_RATE = 150
+VOICE_RATE = 170
 
 def speak(text):
     print(text)
@@ -39,7 +40,7 @@ if (__name__ == "__main__"):
     setFrenchVoice(engine)
 
     # Initialisation de l'analyseur de commande
-    cmdAnalyzer = CommandAnalyzer()
+    cmd = CMD.Command()
 
     # Initialisation du détecteur de sifflement
     whistleDetect = WhistleDetector()
@@ -60,10 +61,13 @@ if (__name__ == "__main__"):
 
         speak("En écoute d'une commande !")
         text = speechToText.listen();
-        if (cmdAnalyzer.analyzeText(text)):
+        if (cmd.parse(text)):
             print("Commande comprise et exécuté !")
-            print(cmdAnalyzer.getCommand())
+            cmd.show()
             speak("Commande comprise et exécuté !")
         else:
+            '''
             error = cmdAnalyzer.getError()
             speak("Code erreur numéro %d, %s" % (cmdAnalyzer.getError(), cmdAnalyzer.getTextError()))
+            '''
+            speak("Erreur: syntaxe commande invalide !")

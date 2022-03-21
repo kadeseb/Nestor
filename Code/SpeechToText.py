@@ -7,8 +7,8 @@ Gère la reconnaissance vocale
 '''
 
 class SpeechToText:
-    TIMEOUT = 30.00
-    PHRASE_TIME_LIMIT = 15.00
+    TIMEOUT = 10.00
+    PHRASE_TIME_LIMIT = 5.00
     ADJUST_DELAY = 3.0
 
     def __init__(self):
@@ -21,14 +21,13 @@ class SpeechToText:
     def listen(self):
         while(True):
             with sr.Microphone() as source:
-                print(">[STP] En écoute...")
-                audio = self.r.listen(source, timeout=self.TIMEOUT, phrase_time_limit=self.PHRASE_TIME_LIMIT)
-            try:
-                return self.r.recognize_google(audio, language="fr-FR")
-            except sr.UnknownValueError:
-                print(">[STP] L'audio n'a pas été compris!")
-            except sr.RequestError as e:
-                print(">[STP] Erreur: Impossible d'obtenir des résultats depuis le service Google Cloud Speech; {0}".format(e))
-            except sr.WaitTimeoutError:
-                print(">[STP] Erreur: Temps impartit écoulé.")
-                return ""
+                try:
+                    print(">[STP] En écoute...")
+                    audio = self.r.listen(source, timeout=self.TIMEOUT, phrase_time_limit=self.PHRASE_TIME_LIMIT)
+                    return self.r.recognize_google(audio, language="fr-FR")
+                except sr.UnknownValueError:
+                    print(">[STP] L'audio n'a pas été compris!")
+                except sr.RequestError as e:
+                    print(">[STP] Erreur: Impossible d'obtenir des résultats depuis le service Google Cloud Speech; {0}".format(e))
+                except sr.WaitTimeoutError:
+                    print(">[STP] Erreur: Temps impartit écoulé.")
