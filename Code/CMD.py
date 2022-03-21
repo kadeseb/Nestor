@@ -10,7 +10,7 @@ class Command:
     #DEFAULT_DEVICE = 'general'
     KEYWORDS_READ_MODE = ["récupère", "recupere"]
     KEYWORDS_WRITE_MODE = ["modifie", "modifier", "change", "changer"]
-    REMOVE_WORDS_LIST = ['le', 'la', 'de', 'du', 'à', 'pour', 'en', 'depuis', 'via']
+    REMOVE_WORDS_LIST = ['le', 'la', 'de', 'du', 'à', 'pour', 'en', 'depuis', 'via', 'sur']
 
     def __init__(self):
         self.mode = None
@@ -20,12 +20,12 @@ class Command:
 
     def parse(self, text):
         self.__init__()
-        words = self._cleanText(text).split(" ")
+        words = self._cleanWords(text.split(' '))
         wordsSz = len(words)
 
-        print(words)
+        print("Résultat parsing:", words)
 
-        if ((wordsSz != 3) and (wordsSz != 4)):
+        if ((wordsSz < 2) or (wordsSz > 4)):
             return False
 
         if (not self._identifyMode(words[0])):
@@ -33,10 +33,14 @@ class Command:
 
         if (self.mode == self.MODE_READ):
             self.argument = Argument(words[1])
-            self.targetDevice = words[2]
+            targetDeviceIndex = 2
         else:
             self.argument = Argument(words[1], words[2])
-            self.targetDevice = words[3]
+            targetDeviceIndex = 3
+
+
+        # Contrôle de la présence de l'équipement cible
+        self.targetDevice = words[targetDeviceIndex] if ((wordsSz - 1) == targetDeviceIndex) else "général"
 
         self.badCmd = False
         return True
@@ -55,12 +59,16 @@ class Command:
         return False
 
     @staticmethod
-    def _cleanText(text):
-        for wordToRemove in Command.REMOVE_WORDS_LIST:
-            text = text.replace(' %s ' %  (wordToRemove), ' ')
-            text = text.lower()
+    def _cleanWords(words):
+        cleanWords = []
 
-        return text
+        for curWord in words:
+            if (curWord in Command.REMOVE_WORDS_LIST):
+                continue
+
+            cleanWords.append(curWord)
+
+        return cleanWords
 
     def getMode():
         return self.mode

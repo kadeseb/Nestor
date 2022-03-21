@@ -16,7 +16,7 @@ from SpeechToText import *
 VOICE_RATE = 270
 VOICE_RATE = 200
 '''
-VOICE_RATE = 250
+VOICE_RATE = 200
 
 def speak(text):
     print(text)
