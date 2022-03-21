@@ -6,17 +6,17 @@
 import pyttsx3
 import time
 # -------
-from SpeechToText import *
 #from CommandAnalyzer2 import *
 import CMD
 from WhistleDetector import *
+from SpeechToText import *
 
 
 '''
 VOICE_RATE = 270
 VOICE_RATE = 200
 '''
-VOICE_RATE = 170
+VOICE_RATE = 250
 
 def speak(text):
     print(text)

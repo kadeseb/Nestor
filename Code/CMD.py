@@ -8,9 +8,9 @@ class Command:
 
     # Mot-clefs correspondant au mode de fontionnement
     #DEFAULT_DEVICE = 'general'
-    KEYWORDS_READ_MODE = ["récupère"]
-    KEYWORDS_WRITE_MODE = ["modifie"]
-    REMOVE_WORDS_LIST = ['le', 'la', 'de', 'du', 'à', 'pour', 'en']
+    KEYWORDS_READ_MODE = ["récupère", "recupere"]
+    KEYWORDS_WRITE_MODE = ["modifie", "modifier", "change", "changer"]
+    REMOVE_WORDS_LIST = ['le', 'la', 'de', 'du', 'à', 'pour', 'en', 'depuis', 'via']
 
     def __init__(self):
         self.mode = None
