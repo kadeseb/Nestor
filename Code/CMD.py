@@ -7,10 +7,10 @@ class Command:
     MODE_WRITE = 2
 
     # Mot-clefs correspondant au mode de fontionnement
-    #DEFAULT_DEVICE = 'general'
+    DEFAULT_DEVICE = 'general'
     KEYWORDS_READ_MODE = ["récupère", "recupere"]
     KEYWORDS_WRITE_MODE = ["modifie", "modifier", "change", "changer"]
-    REMOVE_WORDS_LIST = ['le', 'la', 'de', 'du', 'à', 'pour', 'en', 'depuis', 'via', 'sur']
+    REMOVE_WORDS_LIST = ['le', 'la', 'de', 'du', 'à', 'pour', 'en', 'depuis', 'via', 'sur', "l'"]
 
     def __init__(self):
         self.mode = None
@@ -40,7 +40,7 @@ class Command:
 
 
         # Contrôle de la présence de l'équipement cible
-        self.targetDevice = words[targetDeviceIndex] if ((wordsSz - 1) == targetDeviceIndex) else "général"
+        self.targetDevice = words[targetDeviceIndex] if ((wordsSz - 1) == targetDeviceIndex) else self.DEFAULT_DEVICE
 
         self.badCmd = False
         return True
