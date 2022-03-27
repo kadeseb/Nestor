@@ -7,7 +7,7 @@ import pyttsx3
 import time
 # -------
 #from CommandAnalyzer2 import *
-import CMD
+import Command
 from WhistleDetector import *
 from SpeechToText import *
 
@@ -40,7 +40,7 @@ if (__name__ == "__main__"):
     setFrenchVoice(engine)
 
     # Initialisation de l'analyseur de commande
-    cmd = CMD.Command()
+    query = Command.Query()
 
     # Initialisation du détecteur de sifflement
     whistleDetect = WhistleDetector()
@@ -61,9 +61,9 @@ if (__name__ == "__main__"):
 
         speak("En écoute d'une commande !")
         text = speechToText.listen();
-        if (cmd.parse(text)):
+        if (query.parse(text)):
             print("Commande comprise et exécuté !")
-            cmd.show()
+            query.show()
             speak("Commande comprise et exécuté !")
         else:
             '''

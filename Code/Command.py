@@ -84,7 +84,7 @@ class Query:
         cleanWords = []
 
         for curWord in words:
-            if (curWord in Command.REMOVE_WORDS_LIST):
+            if (curWord in Query.REMOVE_WORDS_LIST):
                 continue
 
             cleanWords.append(curWord)

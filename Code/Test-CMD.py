@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 
-import CMD
+import Command
 
 COMMANDS = [
     'allume le bandeau',
@@ -14,7 +14,7 @@ COMMANDS = [
 
 for command in COMMANDS:
     print("Texte:", command)
-    cmd = CMD.Command()
-    cmd.parse(command)
-    cmd.show()
+    q = Command.Query()
+    q.parse(command)
+    q.show()
     print("")
