@@ -121,10 +121,10 @@ class Answer:
         3: "L'attribut est en lecture seule !"
     }
 
-    def __init__(self, code, argument=None):
+    def __init__(self, code, argument=None, message=None):
         self.code = code
         self.argument = argument
-        self.message = str()
+        self.message = message
 
         if (self.code != Answer.CODE_OK):
             self.message = Answer.ERROR_CODE_TO_TEXT[self.code]
