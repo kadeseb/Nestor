@@ -108,3 +108,19 @@ class Query:
             print ("{Requête invalide} !")
         else:
             print("Mode [%d] ; Arguments [%s : %s] ; Cible [%s]" % (self.mode, self.argument.getName(), self.argument.getValue(), self.targetDevice))
+
+class Answer:
+    CODE_OK = 0
+    CODE_ERROR_UNKNOW_ATTRIBUTE = 1
+    CODE_ERROR_INVALID_VALUE = 2
+    CODE_ERROR_READONLY_ATTRIBUTE = 3
+
+    def __init__(self, code, argument=None):
+        self.code = code
+        self.argument = argument
+
+    def getCode(self):
+        return self.code
+
+    def getArgument(self):
+        return self.argument
