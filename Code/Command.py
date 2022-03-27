@@ -1,7 +1,28 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-class Command:
+class Argument:
+    '''
+    Gère un argument
+    '''
+    def __init__(self, name, value=None):
+        self.name = name
+        self.value = value
+
+    def getName(self):
+        return self.name
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, value):
+        self.value = value
+
+
+class Query:
+    '''
+    Gère le parsing de requête
+    '''
     # Mode d'opération
     MODE_READ = 1
     MODE_WRITE = 2
@@ -70,29 +91,20 @@ class Command:
 
         return cleanWords
 
-    def getMode():
+    def getMode(self):
         return self.mode
 
-    def getArgument():
+    def getArgument(self):
         return self.argument
 
-    def getTargetDevice():
+    def getTargetDevice(self):
         return self.targetDevice
+
+    def isInvalid(self):
+        return self.badCmd
 
     def show(self):
         if (self.badCmd):
-            print ("{Commande invalide} !")
+            print ("{Requête invalide} !")
         else:
             print("Mode [%d] ; Arguments [%s : %s] ; Cible [%s]" % (self.mode, self.argument.getName(), self.argument.getValue(), self.targetDevice))
-
-
-class Argument:
-    def __init__(self, name=None, value=None):
-        self.name = name
-        self.value = value
-
-    def getName(self):
-        return self.name
-
-    def getValue(self):
-        return self.value
