@@ -115,9 +115,19 @@ class Answer:
     CODE_ERROR_INVALID_VALUE = 2
     CODE_ERROR_READONLY_ATTRIBUTE = 3
 
+    ERROR_CODE_TO_TEXT = {
+        1: "L'attribut cible n'exite pas !",
+        2: "La valeur fournie pour l'attribut est invalide !",
+        3: "L'attribut est en lecture seule !"
+    }
+
     def __init__(self, code, argument=None):
         self.code = code
         self.argument = argument
+        self.message = str()
+
+        if (self.code != Answer.CODE_OK):
+            self.message = Answer.ERROR_CODE_TO_TEXT[self.code]
 
     def getCode(self):
         return self.code
