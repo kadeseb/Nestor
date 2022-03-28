@@ -6,17 +6,14 @@
 import pyttsx3
 import time
 # -------
-#from CommandAnalyzer2 import *
-import Command
 from WhistleDetector import *
 from SpeechToText import *
+import Command
+import Device
 
 
-'''
-VOICE_RATE = 270
 VOICE_RATE = 200
-'''
-VOICE_RATE = 200
+VOICE_NAME = "french"
 
 def speak(text):
     print(text)
@@ -27,7 +24,7 @@ def setFrenchVoice(engine):
     voices = engine.getProperty('voices')
 
     for voice in voices:
-        if (voice.name == "french"):
+        if (voice.name == VOICE_NAME):
             engine.setProperty("voice", voice.id)
             return True
 
@@ -36,17 +33,20 @@ def setFrenchVoice(engine):
 if (__name__ == "__main__"):
     # Initialisation de la synthèse vocale
     engine = pyttsx3.init();
-    engine.setProperty('rate', VOICE_RATE)
+    # engine.setProperty('rate', VOICE_RATE)
     setFrenchVoice(engine)
-
-    # Initialisation de l'analyseur de commande
-    query = Command.Query()
 
     # Initialisation du détecteur de sifflement
     whistleDetect = WhistleDetector()
 
     # Initialisation de la reconnaissance vocale
     speechToText = SpeechToText()
+
+    # Initialisation de l'analyseur de requête
+    query = Command.Query()
+
+    # Initialisation du gestionnaire d'équipement
+    devManager = Device.Manager()
 
     print("[Nestor V1]");
     speak("Calibration du bruit ambiant en cours...")
@@ -62,12 +62,21 @@ if (__name__ == "__main__"):
         speak("En écoute d'une commande !")
         text = speechToText.listen();
         if (query.parse(text)):
-            print("Commande comprise et exécuté !")
             query.show()
-            speak("Commande comprise et exécuté !")
+            speak("Syntaxe commande valide !")
         else:
-            '''
-            error = cmdAnalyzer.getError()
-            speak("Code erreur numéro %d, %s" % (cmdAnalyzer.getError(), cmdAnalyzer.getTextError()))
-            '''
+            speak("Syntaxe commande invalide !")
+            error = query.getError()
+            speak("Code erreur numéro %d, %s" % (query.getError(), query.getTextError()))
             speak("Erreur: syntaxe commande invalide !")
+            continue
+
+        # Execution de la requête
+        answer = devManager.execute(query)
+
+        if (answer.getCode() == 0):
+            speak("La requête a été exécuté avec succès !")
+        else:
+            speak("La requête a échoué !")
+
+        speak(answer.getMessage())

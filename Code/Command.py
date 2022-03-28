@@ -31,7 +31,7 @@ class Query:
     DEFAULT_DEVICE = 'general'
     KEYWORDS_READ_MODE = ["récupère", "recupere"]
     KEYWORDS_WRITE_MODE = ["modifie", "modifier", "change", "changer"]
-    REMOVE_WORDS_LIST = ['le', 'la', 'de', 'du', 'à', 'pour', 'en', 'depuis', 'via', 'sur', "l'"]
+    REMOVE_WORDS_LIST = ['le', 'la', 'de', 'du', 'à', 'pour', 'en', 'depuis', 'via', 'sur']
 
     def __init__(self):
         self.mode = None
@@ -87,6 +87,7 @@ class Query:
             if (curWord in Query.REMOVE_WORDS_LIST):
                 continue
 
+            curWord = curWord.replace("l'", "")
             cleanWords.append(curWord)
 
         return cleanWords
@@ -114,14 +115,16 @@ class Answer:
     CODE_ERROR_UNKNOW_ATTRIBUTE = 1
     CODE_ERROR_INVALID_VALUE = 2
     CODE_ERROR_READONLY_ATTRIBUTE = 3
+    CODE_ERROR_UNKNOW_DEVICE = 4
 
     ERROR_CODE_TO_TEXT = {
-        1: "L'attribut cible n'exite pas !",
+        1: "L'attribut cible n'existe pas !",
         2: "La valeur fournie pour l'attribut est invalide !",
-        3: "L'attribut est en lecture seule !"
+        3: "L'attribut est en lecture seule !",
+        4: "L'équipement n'existe pas !"
     }
 
-    def __init__(self, code, argument=None, message=None):
+    def __init__(self, code, message=None, argument=None):
         self.code = code
         self.argument = argument
         self.message = message
@@ -134,3 +137,6 @@ class Answer:
 
     def getArgument(self):
         return self.argument
+
+    def getMessage(self):
+        return self.message
