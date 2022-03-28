@@ -1,2 +1,2 @@
-# nestor
+# Nestor
 A lightweight home assistant
