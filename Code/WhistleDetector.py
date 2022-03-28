@@ -16,7 +16,7 @@ class WhistleDetector:
     RATE = 22100
     CHANNELS = 1
     FORMAT = pyaudio.paInt16
-    TRIGGER_DELAY = 0.250
+    TRIGGER_DELAY = 0.1#0.250
 
     def __init__(self):
         self.p = pyaudio.PyAudio()
@@ -25,9 +25,9 @@ class WhistleDetector:
         self.currentWhistling = False
 
     def __del__(self):
-        if (self.stream != None)
-        self.stream.stop_stream()
-        self.stream.close()
+        if (self.stream != None):
+            self.stream.stop_stream()
+            self.stream.close()
 
         if (self.p != None):
             self.p.terminate()

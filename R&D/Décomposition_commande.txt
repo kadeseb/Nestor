@@ -1,0 +1,15 @@
+[= Exemple de commandes =]
+allume le bandeau
+change la luminosité à 25% du bandeau
+récupère la luminosité du bandeau
+change la couleur RGB en 255 255 255 du bandeau
+éteins le bandeau
+change la couleur en bleu du bandeau
+
+[= Analyse de la commande =]
+1) Suppression des déterminants
+<commande> [<attribut> [valeur]] <nom_équipement>
+
+<commande>            : Correspond au verbe utilisé
+[<attribut> [valeur]] : Attribut et valeur si requis
+<nom_équipement>      : Nom de l'équipement cible

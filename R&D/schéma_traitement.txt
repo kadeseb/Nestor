@@ -1,0 +1,14 @@
+{texte brut}
+ |
+ v
+{usage de class Command
+  -> Supprime les mots parasites
+  -> Parse la commande
+  -> Vérifie la validité syntaxique de la commande
+}
+ |
+ v
+{passage de l'instance de Command à la class CommandHandler
+  -> Contrôle la validité opérationnel de la commande
+  -> Dispatch la commande à l'équipement cible
+}
