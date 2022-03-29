@@ -65,10 +65,7 @@ if (__name__ == "__main__"):
             query.show()
             speak("Syntaxe commande valide !")
         else:
-            speak("Syntaxe commande invalide !")
-            error = query.getError()
-            speak("Code erreur numéro %d, %s" % (query.getError(), query.getTextError()))
-            speak("Erreur: syntaxe commande invalide !")
+            speak("Erreur : Syntaxe commande invalide !")
             continue
 
         # Execution de la requête
