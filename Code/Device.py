@@ -79,8 +79,8 @@ class General(BaseDevice):
             return r
 
         now = datetime.now()
-        curTime = now.strftime("%H heure %M")
-        curDate = now.strftime("%d/%m/%Y")
+        curTime = '{dt.hour} heure {dt.minute}'.format(dt=now)
+        curDate = '{dt.day}/{dt.month}/{dt.year}'.format(dt=now)
 
         if (attribute.getName() == "heure"):
             attribute.setValue(curTime)
