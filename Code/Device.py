@@ -4,11 +4,13 @@ from datetime import datetime
 # ---
 import Attribute
 import Command
+import LEDPanel as DEV_LEDPanel
 
 class Manager:
     def __init__(self):
         self.devices = []
         self.devices.append(General())
+        self.devices.append(LEDPanel())
 
     def execute(self, query):
         device = None
@@ -40,10 +42,10 @@ class BaseDevice:
     def getName(self):
         return self.name
 
-    def findAttribute(self, attributeName):
+    def getAttribute(self, attributeName):
         attr = None
         for attr in self.attributes:
-            if (attribute.getName() == attr.getName()):
+            if (attributeName == attr.getName()):
                 break
 
         return attr
@@ -58,8 +60,6 @@ class General(BaseDevice):
     def __init__(self):
         super().__init__()
         self.name = "general"
-        self.attributes = []
-
         self.attributes.append(Attribute.ReadOnly("heure"))
         self.attributes.append(Attribute.ReadOnly("date"))
         self.attributes.append(Attribute.ReadOnly("temps"))
@@ -81,3 +81,37 @@ class General(BaseDevice):
 
     def set(self, attributeName, attributeValue):
         return Command.Answer(Command.Answer.CODE_ERROR_READONLY_ATTRIBUTE, Command.Answer.ERROR_CODE_TO_TEXT[Command.Answer.CODE_ERROR_READONLY_ATTRIBUTE])
+
+class LEDPanel(BaseDevice):
+    def __init__(self):
+        super().__init__()
+        self.name = "panneau"
+
+        self.attributes.append(Attribute.Boolean("alimentation"))
+        self.attributes.append(Attribute.Integer("luminosité"))
+
+    def get(self, attributName):
+        return Command.Answer(Command.Answer.CODE_ERROR_INVALID_VALUE, "Cet équipement ne supporte pas la lecture d'attribut.")
+
+    def set(self, attributeName, attributeValue):
+        r = Command.Answer(Command.Answer.CODE_ERROR_UNKNOW_ATTRIBUTE, Command.Answer.ERROR_CODE_TO_TEXT[Command.Answer.CODE_ERROR_UNKNOW_ATTRIBUTE])
+        attribute = self.getAttribute(attributeName)
+
+        if (attribute == None):
+            return r
+
+        r = attribute.setValue(attributeValue)
+        if (r == False):
+            return Command.Answer(Command.Answer.CODE_ERROR_INVALID_VALUE, Command.Answer.ERROR_CODE_TO_TEXT[Command.Answer.CODE_ERROR_INVALID_VALUE])
+
+        controller = DEV_LEDPanel.Controller('BE:89:A0:04:6D:92')
+
+        if (attributeName == "alimentation"):
+            if (attributeValue == "0"):
+                controller.powerOff()
+            else:
+                controller.powerOn()
+        elif (attributeName == "luminosité"):
+            controller.setBrightness(int(attributeValue))
+
+        return Command.Answer(Command.Answer.CODE_OK, "La valeur de l'attribut a été modifiée avec succèes !")

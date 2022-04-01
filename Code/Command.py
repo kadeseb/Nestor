@@ -129,7 +129,7 @@ class Answer:
         self.argument = argument
         self.message = message
 
-        if (self.code != Answer.CODE_OK):
+        if ((self.code != Answer.CODE_OK) and (message == None)):
             self.message = Answer.ERROR_CODE_TO_TEXT[self.code]
 
     def getCode(self):

@@ -89,7 +89,13 @@ class Boolean(BaseAttribute):
         return value
 
     def setValue(self, value):
-        return super().setValue(self._parseValue(value))
+        value = self._parseValue(value)
+
+        if (self.isValueValid(value)):
+            self.value = value
+            return True
+
+        return False
 
     def isValueValid(self, value):
         return (value == '0') or (value == '1')

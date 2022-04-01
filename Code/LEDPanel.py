@@ -20,9 +20,11 @@ class Controller:
 
         self.macAddr = macAddr
 
+    '''
     def __del__(self):
         self.adapter.stop()
-
+    '''
+    
     def powerOff(self):
         self.device.char_write_handle(self.HANDLE, self.POWER_OFF_CMD)
 
