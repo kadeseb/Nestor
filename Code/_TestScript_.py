@@ -2,6 +2,7 @@
 # -*- coding: utf8 -*-
 
 from LEDPanel import *
+from time import sleep
 
 LEDPANEL_MAC_ADDR = 'BE:89:A0:04:6D:92'
 
@@ -18,6 +19,5 @@ if (__name__ == '__main__'):
     for i in range(0, 6):
         led.powerOn()
         led.setColor(colors[i%2])
+        sleep(3)
         led.powerOff()
-
-	time.sleep(1)
