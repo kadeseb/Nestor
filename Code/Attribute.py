@@ -110,7 +110,7 @@ class Boolean(BaseAttribute):
 class TextColor(BaseAttribute):
     VALID_COLORS = {
         "rouge" : (255, 0, 0),
-        "vert" : (0, 255 0),
+        "vert" : (0, 255, 0),
         "bleu" : (0, 0, 255),
         "blanc" : (255, 255, 255),
         "orange" : (255, 0x45, 00)
