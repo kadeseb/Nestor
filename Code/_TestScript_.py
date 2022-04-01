@@ -18,6 +18,6 @@ if (__name__ == '__main__'):
 
     for i in range(0, 6):
         led.powerOn()
-        led.setColor(colors[i%2])
+        led.setColor(*(colors[i%2]))
         sleep(3)
         led.powerOff()
