@@ -22,7 +22,7 @@ class Controller:
         while (True):
             try:
                 print("[LEDPanel] Connexion au bandeau...")
-                self.device = self.adapter.connect(macAddr)#, address_type=ADDRESS_TYPE)
+                self.device = self.adapter.connect(self.macAddr)#, address_type=ADDRESS_TYPE)
                 break
             except:
                 print("[LEDPanel] La connexion au bandeau a échoué !")
