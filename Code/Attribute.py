@@ -108,6 +108,23 @@ class Boolean(BaseAttribute):
         return (value == '0') or (value == '1')
 
 class TextColor(BaseAttribute):
+    VALID_COLORS = {
+        "rouge" : (0, 255, 0),
+        "vert" : (255, 0, 0),
+        "bleu" : (0, 0, 255),
+        "blanc" : (255, 255, 0)
+    }
+
     def __init__(self, name):
         super().__init__(name)
         self.type = BaseAttribute.TYPE_COLOR
+
+    def setValue(self, value):
+        if (not self.isValueValid(value)):
+            return False
+
+        self.value = self.VALID_COLORS[value]
+        return True
+
+    def isValueValid(self,value):
+        return value in self.VALID_COLORS
