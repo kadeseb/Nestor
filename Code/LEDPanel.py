@@ -16,7 +16,14 @@ class Controller:
         # Initialisation de l'adaptateur Bluetooth
         self.adapter = pygatt.GATTToolBackend()
         self.adapter.start()
-        self.device = self.adapter.connect(macAddr)#, address_type=ADDRESS_TYPE)
+
+        while (True):
+            try:
+                self.device = self.adapter.connect(macAddr)#, address_type=ADDRESS_TYPE)
+                break
+            except:
+                print("La connexion au bandeau a échoué ! Nouvelle tentative...")
+                continue
 
         self.macAddr = macAddr
 
@@ -24,7 +31,7 @@ class Controller:
     def __del__(self):
         self.adapter.stop()
     '''
-    
+
     def powerOff(self):
         self.device.char_write_handle(self.HANDLE, self.POWER_OFF_CMD)
 
