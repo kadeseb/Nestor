@@ -5,6 +5,7 @@ class BaseAttribute:
     TYPE_READONLY = 1
     TYPE_INTEGER = 2
     TYPE_BOOLEAN = 3
+    TYPE_COLOR = 4
 
     def __init__(self, name):
         # if (not BaseAttribute.isTypeValid(type)):
@@ -36,7 +37,7 @@ class BaseAttribute:
         return self.value
 
     def setValue(self, value):
-        if (not self.isValueValid(value)):
+        if (self.readOnly or (not self.isValueValid(value))):
             return False
 
         self.value = value
@@ -51,9 +52,6 @@ class ReadOnly(BaseAttribute):
         super().__init__(name)
         self.readOnly = True
         self.type = BaseAttribute.TYPE_READONLY
-
-    def setValue(self, value):
-        return False
 
 class Integer(BaseAttribute):
     '''
@@ -105,3 +103,8 @@ class Boolean(BaseAttribute):
 
     def isValueValid(self, value):
         return (value == '0') or (value == '1')
+
+class TextColor(BaseAttribute):
+    def __init__(self, name):
+        super().__init__(name)
+        self.type = BaseAttribute.TYPE_COLOR
