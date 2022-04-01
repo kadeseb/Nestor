@@ -85,7 +85,7 @@ class General(BaseDevice):
 class LEDPanel(BaseDevice):
     def __init__(self):
         super().__init__()
-        self.name = "panneau"
+        self.name = "bandeau"
 
         self.attributes.append(Attribute.Boolean("alimentation"))
         self.attributes.append(Attribute.Integer("luminosité"))
