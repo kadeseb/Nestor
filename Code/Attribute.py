@@ -8,17 +8,16 @@ class BaseAttribute:
     TYPE_COLOR = 4
 
     def __init__(self, name):
-        # if (not BaseAttribute.isTypeValid(type)):
-        #     raise Exception("Le type de l'attribut est invalide !")
-
         self.name = name
         self.type = None
         self.value = None
         self.readOnly = False
 
+    '''
     @staticmethod
     def isTypeValid(type):
         return (type == BaseAttribute.TYPE_READONLY) or (type == BaseAttribute.TYPE_INTEGER)
+    '''
 
     def isValueValid(self, value):
         ''' Méthode à surcharger '''
@@ -37,11 +36,8 @@ class BaseAttribute:
         return self.value
 
     def setValue(self, value):
-        if (self.readOnly or (not self.isValueValid(value))):
-            return False
-
-        self.value = value
-        return True
+        ''' Méthode à surcharger '''
+        return False
 
 
 class ReadOnly(BaseAttribute):
