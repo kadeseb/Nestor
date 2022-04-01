@@ -18,14 +18,6 @@ class Controller:
         self.adapter.start()
         self.macAddr = macAddr
 
-        while (True):
-            try:
-                self.device = self.adapter.connect(macAddr)#, address_type=ADDRESS_TYPE)
-                break
-            except:
-                print("La connexion au bandeau a échoué ! Nouvelle tentative...")
-                continue
-
     def _connect(self):
         while (True):
             try:
