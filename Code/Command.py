@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+'''
+Gère les requêtes et réponses
+'''
 
 class Argument:
     '''

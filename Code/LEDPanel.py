@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 # -*- coding:utf8 -*-
+'''
+Gère la connexion Bluetooth avec le panneau LED
+'''
 
-'''
-Gère un panneau LED
-'''
 import pygatt
 
 class Controller:

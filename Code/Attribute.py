@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
+'''
+Gère les attributs types d'attribut pour les équipements
+'''
 
 class BaseAttribute:
     TYPE_READONLY = 1

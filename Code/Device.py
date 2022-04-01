@@ -1,10 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
+'''
+Gère les équipements
+'''
+
 from datetime import datetime
-# ---
+# -------
 import Attribute
 import Command
 import LEDPanel as DEV_LEDPanel
+import Config
 
 class Manager:
     def __init__(self):
@@ -105,7 +110,7 @@ class LEDPanel(BaseDevice):
         if (r == False):
             return Command.Answer(Command.Answer.CODE_ERROR_INVALID_VALUE, Command.Answer.ERROR_CODE_TO_TEXT[Command.Answer.CODE_ERROR_INVALID_VALUE])
 
-        controller = DEV_LEDPanel.Controller('BE:89:A0:04:6D:92')
+        controller = DEV_LEDPanel.Controller(Config.LEDPANEL_MAC_ADDRESS)
 
         if (attributeName == "alimentation"):
             if (attributeValue == "0"):
