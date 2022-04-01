@@ -4,6 +4,7 @@
 '''
 Gère un panneau LED
 '''
+import pygatt
 
 class LED:
     HANDLE = 0x08
