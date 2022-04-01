@@ -113,5 +113,6 @@ class LEDPanel(BaseDevice):
                 controller.powerOn()
         elif (attributeName == "luminosité"):
             controller.setBrightness(int(attributeValue))
-
+            
+        controller.stopAdapter()
         return Command.Answer(Command.Answer.CODE_OK, "La valeur de l'attribut a été modifiée avec succèes !")
