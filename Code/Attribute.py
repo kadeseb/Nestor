@@ -13,12 +13,6 @@ class BaseAttribute:
         self.value = None
         self.readOnly = False
 
-    '''
-    @staticmethod
-    def isTypeValid(type):
-        return (type == BaseAttribute.TYPE_READONLY) or (type == BaseAttribute.TYPE_INTEGER)
-    '''
-
     def isValueValid(self, value):
         ''' Méthode à surcharger '''
         return False
