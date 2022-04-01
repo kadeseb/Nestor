@@ -36,6 +36,7 @@ class Controller:
         self.device.char_write_handle(self.HANDLE, self.POWER_OFF_CMD)
 
     def powerOn(self):
+        self.setColor(0, 255, 0)
         self.device.char_write_handle(self.HANDLE, self.POWER_ON_CMD)
 
     def setColor(self, red, green, blue):
