@@ -36,7 +36,7 @@ class WhistleDetector:
         self.stream = self.p.open(format=self.FORMAT, channels=self.CHANNELS, rate=self.RATE, input=True, frames_per_buffer=self.CHUNK)
 
     def _computeSpector(self):
-        data = self.stream.read(self.CHUNK)
+        data = self.stream.read(self.CHUNK, exception_on_overflow = False)
         data = struct.unpack('<%dh'%(self.CHUNK), data)
         data = [x & self.bitmask for x in data]
 
