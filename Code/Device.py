@@ -89,7 +89,7 @@ class LEDPanel(BaseDevice):
 
         self.attributes.append(Attribute.Boolean("alimentation"))
         self.attributes.append(Attribute.Integer("luminosité"))
-        self.attributes.append(Attribute.Color("couleur"))
+        self.attributes.append(Attribute.TextColor("couleur"))
 
     def get(self, attributName):
         return Command.Answer(Command.Answer.CODE_ERROR_INVALID_VALUE, "Cet équipement ne supporte pas la lecture d'attribut.")
@@ -116,7 +116,7 @@ class LEDPanel(BaseDevice):
             controller.setBrightness(int(attributeValue))
         elif (attributeName == "couleur"):
             controller.setColor(*attribute.getValue())
-            
+
         controller.stopAdapter()
 
         return Command.Answer(Command.Answer.CODE_OK, "La valeur de l'attribut a été modifiée avec succèes !")

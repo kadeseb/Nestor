@@ -5,7 +5,7 @@ class BaseAttribute:
     TYPE_READONLY = 1
     TYPE_INTEGER = 2
     TYPE_BOOLEAN = 3
-    TYPE_COLOR = 4
+    TYPE_TEXTCOLOR = 4
 
     def __init__(self, name):
         self.name = name
