@@ -61,6 +61,13 @@ class Integer(BaseAttribute):
         self.max = max
         return True
 
+    def setValue(self, value):
+        if (not self.isValueValid(value)):
+            return False
+
+        self.value = value
+        return True
+
     def isValueValid(self, value):
         try:
             int(value)
