@@ -23,7 +23,7 @@ class SpeechToText:
             with sr.Microphone() as source:
                 try:
                     print(">[STP] En écoute...")
-                    audio = self.r.listen(source, timeout=self.TIMEOUT)#, phrase_time_limit=self.PHRASE_TIME_LIMIT)
+                    audio = self.r.listen(source, timeout=self.TIMEOUT, phrase_time_limit=self.PHRASE_TIME_LIMIT)
                     return self.r.recognize_google(audio, language="fr-FR")
                 except sr.UnknownValueError:
                     print(">[STP] L'audio n'a pas été compris!")
