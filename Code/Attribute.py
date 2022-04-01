@@ -85,5 +85,23 @@ class Boolean(BaseAttribute):
         super().__init__(name)
         self.type = BaseAttribute.TYPE_BOOLEAN
 
+    @staticmethod
+    def _parseValue(value):
+        validFalseValues = ["0", "zéro", "faux"]
+        validTrueValues = ["1", "un", "vrai"]
+
+        for falseValue in validFalseValues:
+            if (value == falseValue):
+                return '0'
+
+        for trueValue in validTrueValues:
+            if (value == trueValue):
+                return '1'
+
+        return value
+
+    def setValue(self, value):
+        return super().setValue(self._parseValue(value))
+
     def isValueValid(self, value):
         return (value == '0') or (value == '1')
