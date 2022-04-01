@@ -117,7 +117,7 @@ class TextColor(BaseAttribute):
 
     def __init__(self, name):
         super().__init__(name)
-        self.type = BaseAttribute.TYPE_COLOR
+        self.type = BaseAttribute.TYPE_TEXTCOLOR
 
     def setValue(self, value):
         if (not self.isValueValid(value)):
