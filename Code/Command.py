@@ -89,6 +89,8 @@ class Query:
         cleanWords = []
 
         for curWord in words:
+            curWord = curWord.lower()
+            
             if (curWord in Query.REMOVE_WORDS_LIST):
                 continue
 

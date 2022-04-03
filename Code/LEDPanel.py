@@ -17,17 +17,34 @@ class Controller:
         self.adapter = pygatt.GATTToolBackend()
         self.adapter.start()
         self.macAddr = macAddr
-        self._connect()
+        self.device = None
+        #self._connect()
+
+    def reconnectIfDisconnected(func):
+        ''' Décorateur '''
+
+        def wrapper(self, *args, **kwargs):
+            try:
+                if (self.device == None):
+                    raise pygatt.exceptions.NotConnectedError
+
+                return func(self, *args, **kwargs)
+            except pygatt.exceptions.NotConnectedError:
+                self._connect()
+                return func(self, *args, **kwargs)
+
+        return wrapper
+
 
     def _connect(self):
         while (True):
             try:
                 print("[LEDPanel] Connexion au bandeau...")
                 self.device = self.adapter.connect(self.macAddr)#, address_type=ADDRESS_TYPE)
+                print(self.device._connected)
                 break
-            except:
-                print("[LEDPanel] La connexion au bandeau a échoué !")
-                continue
+            except pygatt.exceptions.NotConnectedError as e:
+                print("Erreur: La connexion à échoué !")
 
     def stopAdapter(self):
         self.adapter.stop()
@@ -37,15 +54,18 @@ class Controller:
         self.adapter.stop()
     '''
 
+    @reconnectIfDisconnected
     def powerOff(self):
         self.device.char_write_handle(self.HANDLE, self.POWER_OFF_CMD)
 
+    @reconnectIfDisconnected
     def powerOn(self):
-        self.setColor(0, 0, 255)
         self.device.char_write_handle(self.HANDLE, self.POWER_ON_CMD)
 
+    @reconnectIfDisconnected
     def setColor(self, red, green, blue):
         self.device.char_write_handle(self.HANDLE, bytearray([0x7E, 0x07, 0x05, 0x03, red, green, blue, 0x10, 0xEF]))
 
+    @reconnectIfDisconnected
     def setBrightness(self, brightness):
         self.device.char_write_handle(self.HANDLE, bytearray([0x7E, 0x04, 0x01, brightness, 0x01, 0xFF, 0xFF, 0x00, 0xEF]))

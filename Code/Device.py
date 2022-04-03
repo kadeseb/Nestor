@@ -91,11 +91,16 @@ class LEDPanel(BaseDevice):
     def __init__(self):
         super().__init__()
         self.name = "bandeau"
-
+        self.controller = DEV_LEDPanel.Controller(Config.LEDPANEL_MAC_ADDRESS)
         self.attributes.append(Attribute.Boolean("alimentation"))
         self.attributes.append(Attribute.Integer("luminosité"))
         self.attributes.append(Attribute.TextColor("couleur"))
 
+    '''
+    def __del__(self):
+        self.controller.stopAdapter()
+    '''
+    
     def get(self, attributName):
         return Command.Answer(Command.Answer.CODE_ERROR_INVALID_VALUE, "Cet équipement ne supporte pas la lecture d'attribut.")
 
@@ -110,18 +115,16 @@ class LEDPanel(BaseDevice):
         if (r == False):
             return Command.Answer(Command.Answer.CODE_ERROR_INVALID_VALUE, Command.Answer.ERROR_CODE_TO_TEXT[Command.Answer.CODE_ERROR_INVALID_VALUE])
 
-        controller = DEV_LEDPanel.Controller(Config.LEDPANEL_MAC_ADDRESS)
+        #controller = DEV_LEDPanel.Controller(Config.LEDPANEL_MAC_ADDRESS)
 
         if (attributeName == "alimentation"):
             if (attributeValue == "0"):
-                controller.powerOff()
+                self.controller.powerOff()
             else:
-                controller.powerOn()
+                self.controller.powerOn()
         elif (attributeName == "luminosité"):
-            controller.setBrightness(int(attributeValue))
+            self.controller.setBrightness(int(attributeValue))
         elif (attributeName == "couleur"):
-            controller.setColor(*attribute.getValue())
-
-        controller.stopAdapter()
+            self.controller.setColor(*attribute.getValue())
 
         return Command.Answer(Command.Answer.CODE_OK, "La valeur de l'attribut a été modifiée avec succèes !")
