@@ -1,14 +1,16 @@
 #!/usr/bin/python3
-#! -*- coding: utf8 -*-
+# -*- coding: utf8 -*-
+'''
+Gère la détection des sifflement
+'''
+
 import pyaudio
 import wave
 import numpy
 import time
 import struct
-
-'''
-Detecte un sifflement
-'''
+# -------
+import Config
 
 class WhistleDetector:
     LOST_BITS = 7
@@ -16,7 +18,6 @@ class WhistleDetector:
     RATE = 22100
     CHANNELS = 1
     FORMAT = pyaudio.paInt16
-    TRIGGER_DELAY = 0.1#0.250
 
     def __init__(self):
         self.p = pyaudio.PyAudio()
@@ -36,7 +37,7 @@ class WhistleDetector:
         self.stream = self.p.open(format=self.FORMAT, channels=self.CHANNELS, rate=self.RATE, input=True, frames_per_buffer=self.CHUNK)
 
     def _computeSpector(self):
-        data = self.stream.read(self.CHUNK)
+        data = self.stream.read(self.CHUNK, exception_on_overflow = False)
         data = struct.unpack('<%dh'%(self.CHUNK), data)
         data = [x & self.bitmask for x in data]
 
@@ -55,7 +56,7 @@ class WhistleDetector:
                 if (whistleStartTime == None):
                     whistleStartTime = time.time()
 
-                if ((time.time() - whistleStartTime) >= self.TRIGGER_DELAY):
+                if ((time.time() - whistleStartTime) >= Config.WHISTLE_TRIGGER_TIME):
                     return
             else:
                 whistleStartTime = None

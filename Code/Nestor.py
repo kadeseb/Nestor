@@ -10,6 +10,7 @@ from WhistleDetector import *
 from SpeechToText import *
 import Command
 import Device
+import Config
 
 
 VOICE_RATE = 200
@@ -24,7 +25,7 @@ def setFrenchVoice(engine):
     voices = engine.getProperty('voices')
 
     for voice in voices:
-        if (voice.name == VOICE_NAME):
+        if (voice.name == Config.VOICE_NAME):
             engine.setProperty("voice", voice.id)
             return True
 
@@ -33,7 +34,7 @@ def setFrenchVoice(engine):
 if (__name__ == "__main__"):
     # Initialisation de la synthèse vocale
     engine = pyttsx3.init();
-    # engine.setProperty('rate', VOICE_RATE)
+    engine.setProperty('rate', VOICE_RATE)
     setFrenchVoice(engine)
 
     # Initialisation du détecteur de sifflement
@@ -48,7 +49,7 @@ if (__name__ == "__main__"):
     # Initialisation du gestionnaire d'équipement
     devManager = Device.Manager()
 
-    print("[Nestor V1]");
+    print("[Nestor]");
     speak("Calibration du bruit ambiant en cours...")
     speechToText.calibrateAmbientNoise()
     speak("Calibration terminée !")
@@ -63,7 +64,6 @@ if (__name__ == "__main__"):
         text = speechToText.listen();
         if (query.parse(text)):
             query.show()
-            speak("Syntaxe commande valide !")
         else:
             speak("Erreur : Syntaxe commande invalide !")
             continue
@@ -72,8 +72,7 @@ if (__name__ == "__main__"):
         answer = devManager.execute(query)
 
         if (answer.getCode() == 0):
-            speak("La requête a été exécuté avec succès !")
+            speak("La requête a été exécutée avec succès !")
         else:
             speak("La requête a échoué !")
-
-        speak(answer.getMessage())
+            speak(answer.getMessage())

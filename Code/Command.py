@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-# -*- coding: utf-8 -*-
+# -*- coding: utf8 -*-
+'''
+Gère les requêtes et réponses
+'''
 
 class Argument:
     '''
@@ -46,25 +49,27 @@ class Query:
 
         print("Résultat parsing:", words)
 
-        if ((wordsSz < 2) or (wordsSz > 4)):
+        try:
+            if ((wordsSz < 2) or (wordsSz > 4)):
+                return False
+
+            if (not self._identifyMode(words[0])):
+                return False
+
+            if (self.mode == self.MODE_READ):
+                self.argument = Argument(words[1])
+                targetDeviceIndex = 2
+            else:
+                self.argument = Argument(words[1], words[2])
+                targetDeviceIndex = 3
+
+            # Contrôle de la présence de l'équipement cible
+            self.targetDevice = words[targetDeviceIndex] if ((wordsSz - 1) == targetDeviceIndex) else self.DEFAULT_DEVICE
+            self.badCmd = False
+            return True
+        except:
+            self.badCmd = True
             return False
-
-        if (not self._identifyMode(words[0])):
-            return False
-
-        if (self.mode == self.MODE_READ):
-            self.argument = Argument(words[1])
-            targetDeviceIndex = 2
-        else:
-            self.argument = Argument(words[1], words[2])
-            targetDeviceIndex = 3
-
-
-        # Contrôle de la présence de l'équipement cible
-        self.targetDevice = words[targetDeviceIndex] if ((wordsSz - 1) == targetDeviceIndex) else self.DEFAULT_DEVICE
-
-        self.badCmd = False
-        return True
 
     def _identifyMode(self, word):
         for readKeyword in self.KEYWORDS_READ_MODE:
@@ -84,6 +89,8 @@ class Query:
         cleanWords = []
 
         for curWord in words:
+            curWord = curWord.lower()
+            
             if (curWord in Query.REMOVE_WORDS_LIST):
                 continue
 
@@ -129,7 +136,7 @@ class Answer:
         self.argument = argument
         self.message = message
 
-        if (self.code != Answer.CODE_OK):
+        if ((self.code != Answer.CODE_OK) and (message == None)):
             self.message = Answer.ERROR_CODE_TO_TEXT[self.code]
 
     def getCode(self):
