@@ -18,7 +18,6 @@ class Controller:
         self.adapter.start()
         self.macAddr = macAddr
         self.device = None
-        #self._connect()
 
     def reconnectIfDisconnected(func):
         ''' Décorateur '''
@@ -41,10 +40,9 @@ class Controller:
             try:
                 print("[LEDPanel] Connexion au bandeau...")
                 self.device = self.adapter.connect(self.macAddr)#, address_type=ADDRESS_TYPE)
-                print(self.device._connected)
                 break
             except pygatt.exceptions.NotConnectedError as e:
-                print("Erreur: La connexion à échoué !")
+                print("[LEDPanel] Erreur: La connexion à échoué !")
 
     def stopAdapter(self):
         self.adapter.stop()

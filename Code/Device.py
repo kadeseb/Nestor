@@ -100,7 +100,7 @@ class LEDPanel(BaseDevice):
     def __del__(self):
         self.controller.stopAdapter()
     '''
-    
+
     def get(self, attributName):
         return Command.Answer(Command.Answer.CODE_ERROR_INVALID_VALUE, "Cet équipement ne supporte pas la lecture d'attribut.")
 
@@ -114,8 +114,6 @@ class LEDPanel(BaseDevice):
         r = attribute.setValue(attributeValue)
         if (r == False):
             return Command.Answer(Command.Answer.CODE_ERROR_INVALID_VALUE, Command.Answer.ERROR_CODE_TO_TEXT[Command.Answer.CODE_ERROR_INVALID_VALUE])
-
-        #controller = DEV_LEDPanel.Controller(Config.LEDPANEL_MAC_ADDRESS)
 
         if (attributeName == "alimentation"):
             if (attributeValue == "0"):
